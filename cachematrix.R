@@ -1,9 +1,11 @@
-##Functions to store a given matrix and its inverse in cache
+################################################################
+## Functions to store a given matrix and its inverse in cache ##
+################################################################
 
 ## This function receives a square matrix as a parameter and
 ## returns a list of 4 functions:
-## 1 get: retrieve the 'special' matrix
-## 2 set: set the 'special' matrix
+## 1 get: retrieve the value of the 'special' matrix
+## 2 set: set the value of the 'special' matrix
 ## 3 getInverse: retrieve the value of the inverse matrix (it doesn't calculate it here)
 ## 4 setInverse: set the value of the inverse matrix
 makeCacheMatrix <- function(x = matrix()) {
@@ -26,18 +28,25 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ## This function returns the inverse of the 'special' matrix created by the function
-## 'makeCacheMatrix', or, in case it doesn't have an associated value, it calculates it.
+## 'makeCacheMatrix'.
+## In case of not having the inverse matrix in cache, it calculates and stores it.
 ## The input parameter is the returned object of the function 'makeCacheMatrix'
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  
   inv <- x$getInverse()
   if(!is.null(inv)){
-    message("getting cached inverse")
+    message("getting cached inverse matrix")
     return(inv)
   }
-  message("calculating and caching inverse...")
+  message("calculating and caching inverse matrix...")
   matrix <- x$get()
   inv <- solve(matrix)
   x$setInverse(inv)
   inv
 }
+
+##================================================================================
+## you can test the functions with the following commands:
+## specMatrix <- makeCacheMatrix(matrix(c(1,3,2,4),2,2))
+## cacheSolve(specMatrix) ##1st time: it calculates and stores the inverse matrix
+## cacheSolve(specMatrix) ##2nd time: it retrieves the inverse matrix
